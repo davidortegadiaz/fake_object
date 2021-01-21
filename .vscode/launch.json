@@ -8,7 +8,7 @@
             "name": "fake_object",
             "request": "launch",
             "type": "dart",
-            "program": "lib/src/fake_object_base.dart"
+            "program": "lib/src/example/fake_object_example.dart"
         }
     ]
 }
