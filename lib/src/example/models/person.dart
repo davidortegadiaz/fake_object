@@ -1,5 +1,6 @@
 import 'dart:convert';
-import 'package:fake_object/src/models/pet.dart';
+
+import 'package:fake_object/src/example/models/pet.dart';
 
 class Person {
   final int age;

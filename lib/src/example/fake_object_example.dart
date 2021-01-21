@@ -1,5 +1,5 @@
 import 'package:fake_object/src/create_fake_object.dart';
-import 'package:fake_object/src/models/person.dart' as p;
+import 'package:fake_object/src/example/models/person.dart' as p;
 
 void main() {
   var createFakeObject = CreateFakeObject();
