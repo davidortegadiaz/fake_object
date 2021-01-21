@@ -1,8 +1,9 @@
 import 'dart:mirrors';
 import 'package:faker/faker.dart';
+import 'package:intl/intl.dart';
 
 class CreateFakeObject {
-  final _primitives = [int, double, String, bool, DateTime];
+  final _primitives = [int, double, String, bool, DateTime, List];
   final Faker _faker = Faker();
 
   bool _isPrimitive(Type type) {
@@ -49,9 +50,10 @@ class CreateFakeObject {
         return _faker.randomGenerator.boolean();
         break;
       case DateTime:
-        return _faker.date;
+        return DateFormat('yyyy-MM-dd hh:mm:ss').format(_faker.date.dateTime(maxYear: 2020, minYear: 1980)).toString();
         break;
       default:
+        return null;
     }
   }
 }
