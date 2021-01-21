@@ -35,21 +35,23 @@ class CreateFakeObject {
   }
 
   dynamic _fakerValue(Type type) {
-    if (type == int) {
-      return _faker.randomGenerator.integer(100);
+    switch (type) {
+      case int:
+        return _faker.randomGenerator.integer(100);
+        break;
+      case double:
+        return _faker.randomGenerator.decimal();
+        break;
+      case String:
+        return _faker.lorem.word();
+        break;
+      case bool:
+        return _faker.randomGenerator.boolean();
+        break;
+      case DateTime:
+        return _faker.date;
+        break;
+      default:
     }
-    if (type == double) {
-      return _faker.randomGenerator.decimal();
-    }
-    if (type == String) {
-      return _faker.lorem.word();
-    }
-    if (type == bool) {
-      return _faker.randomGenerator.boolean();
-    }
-    if (type == DateTime) {
-      return _faker.date;
-    }
-    return null;
   }
 }
