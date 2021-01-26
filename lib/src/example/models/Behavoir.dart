@@ -29,14 +29,14 @@ class Behavoir {
     if (map == null) return null;
 
     return Behavoir(
-      isAgresive: map['isAgresive'],
-      isLoving: map['isLoving'],
+      isAgresive: map['isAgresive'] as bool,
+      isLoving: map['isLoving'] as bool,
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory Behavoir.fromJson(String source) => Behavoir.fromMap(json.decode(source));
+  factory Behavoir.fromJson(String source) => Behavoir.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() => 'Behavoir(isAgresive: $isAgresive, isLoving: $isLoving)';

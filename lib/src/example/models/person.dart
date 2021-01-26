@@ -42,16 +42,16 @@ class Person {
     if (map == null) return null;
 
     return Person(
-      age: map['age'],
-      name: map['name'],
-      pet: Pet.fromMap(map['pet']),
+      age: map['age'] as int,
+      name: map['name'] as String,
+      pet: Pet.fromMap(map['pet'] as Map<String, dynamic>),
       birthDate: map['birthDate'] != null ? DateTime.parse(map['birthDate'] as String) : null,
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory Person.fromJson(String source) => Person.fromMap(json.decode(source));
+  factory Person.fromJson(String source) => Person.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {

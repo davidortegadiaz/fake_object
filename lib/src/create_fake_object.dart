@@ -3,22 +3,22 @@ import 'package:faker/faker.dart';
 import 'package:intl/intl.dart';
 
 class CreateFakeObject {
-  final _primitives = [int, double, String, bool, DateTime, List];
-  final Faker _faker = Faker();
+  final _primitives = [int, double, String, bool, DateTime];
+  final Faker _faker = const Faker();
 
   bool _isPrimitive(Type type) {
     return _primitives.contains(type);
   }
 
   ClassMirror _getInstanceMirror(dynamic object) {
-    var instanceMirror = reflect(object);
+    final InstanceMirror instanceMirror = reflect(object);
     return instanceMirror.type;
   }
 
   bool _isList(TypeMirror type) {
     try {
       if (type is ClassMirror) {
-        type.newInstance(Symbol(''), []).reflectee as List;
+        type.newInstance(const Symbol(''), []).reflectee as List;
         return true;
       } else {
         return false;
@@ -29,29 +29,29 @@ class CreateFakeObject {
   }
 
   dynamic setFakeValues(dynamic object) {
-    var map = <String, dynamic>{};
-    var classMirror = _getInstanceMirror(object);
-    for (var v in classMirror.declarations.values) {
+    final Map<String, dynamic> map = <String, dynamic>{};
+    final ClassMirror classMirror = _getInstanceMirror(object);
+    for (final v in classMirror.declarations.values) {
       if (v is VariableMirror) {
         if (_isPrimitive(v.type.reflectedType)) {
-          var name = MirrorSystem.getName(v.simpleName);
+          final String name = MirrorSystem.getName(v.simpleName);
           map[name] = _fakerValue(v.type.reflectedType);
         } else if (_isList(v.type)) {
-          var listType = v.type.typeArguments[0].reflectedType;
+          final Type listType = v.type.typeArguments[0].reflectedType;
           if (_isPrimitive(listType)) {
-            map['${MirrorSystem.getName(v.simpleName)}'] = List.filled(3, _fakerValue(listType));
+            map[MirrorSystem.getName(v.simpleName)] = List.filled(3, _fakerValue(listType));
           } else {
-            var typeMirror = v.type.typeArguments[0];
+            final TypeMirror typeMirror = v.type.typeArguments[0];
             if (typeMirror is ClassMirror) {
-              var instance = typeMirror.newInstance(Symbol(''), []).reflectee;
-              map['${MirrorSystem.getName(v.simpleName)}'] = List.filled(2, setFakeValues(instance));
+              final instance = typeMirror.newInstance(const Symbol(''), []).reflectee;
+              map[MirrorSystem.getName(v.simpleName)] = List.filled(2, setFakeValues(instance));
             }
           }
         } else {
-          var typeMirror = v.type;
+          final TypeMirror typeMirror = v.type;
           if (typeMirror is ClassMirror) {
-            var instance = typeMirror.newInstance(Symbol(''), []).reflectee;
-            map['${MirrorSystem.getName(v.simpleName)}'] = setFakeValues(instance);
+            final instance = typeMirror.newInstance(const Symbol(''), []).reflectee;
+            map[MirrorSystem.getName(v.simpleName)] = setFakeValues(instance);
           }
         }
       }

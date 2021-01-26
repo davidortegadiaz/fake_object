@@ -45,16 +45,18 @@ class Pet extends CreateFakeObject {
     if (map == null) return null;
 
     return Pet(
-      age: map['age'],
-      name: map['name'],
-      friendNames: List<String>.from(map['friendNames']),
-      behavoirList: List<Behavoir>.from(map['behavoirList']?.map((x) => Behavoir.fromMap(x))),
+      age: map['age'] as int,
+      name: map['name'] as String,
+      friendNames: List<String>.from(map['friendNames'] as List),
+      behavoirList: (map['behavoirList'] as List)
+          ?.map((x) => x == null ? null : Behavoir.fromMap(x as Map<String, dynamic>))
+          ?.toList(),
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory Pet.fromJson(String source) => Pet.fromMap(json.decode(source));
+  factory Pet.fromJson(String source) => Pet.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {
