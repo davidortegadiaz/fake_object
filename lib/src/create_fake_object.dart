@@ -15,6 +15,19 @@ class CreateFakeObject {
     return instanceMirror.type;
   }
 
+  bool _isList(TypeMirror type) {
+    try {
+      if (type is ClassMirror) {
+        type.newInstance(Symbol(''), []).reflectee as List;
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      return false;
+    }
+  }
+
   dynamic setFakeValues(dynamic object) {
     var map = <String, dynamic>{};
     var classMirror = _getInstanceMirror(object);
@@ -23,8 +36,19 @@ class CreateFakeObject {
         if (_isPrimitive(v.type.reflectedType)) {
           var name = MirrorSystem.getName(v.simpleName);
           map[name] = _fakerValue(v.type.reflectedType);
+        } else if (_isList(v.type)) {
+          var listType = v.type.typeArguments[0].reflectedType;
+          if (_isPrimitive(listType)) {
+            map['${MirrorSystem.getName(v.simpleName)}'] = List.filled(3, _fakerValue(listType));
+          } else {
+            var typeMirror = v.type.typeArguments[0];
+            if (typeMirror is ClassMirror) {
+              var instance = typeMirror.newInstance(Symbol(''), []).reflectee;
+              map['${MirrorSystem.getName(v.simpleName)}'] = List.filled(2, setFakeValues(instance));
+            }
+          }
         } else {
-          var typeMirror = reflectType(v.type.reflectedType);
+          var typeMirror = v.type;
           if (typeMirror is ClassMirror) {
             var instance = typeMirror.newInstance(Symbol(''), []).reflectee;
             map['${MirrorSystem.getName(v.simpleName)}'] = setFakeValues(instance);
