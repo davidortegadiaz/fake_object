@@ -1,0 +1,21 @@
+# OS files
+.DS_Store
+
+# Dart / Flutter / Melos
+.dart_tool/
+**/.dart_tool/
+build/
+**/build/
+.packages
+**/.packages
+pubspec.lock
+**/pubspec.lock
+.melos_tool/
+
+# Coverage / reports
+coverage/
+
+# IDE files
+.idea/
+.vscode/
+*.iml

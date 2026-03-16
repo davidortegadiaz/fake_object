@@ -1,0 +1,8 @@
+name: fake_object
+
+packages:
+  - packages/**
+
+scripts:
+  analyze: melos exec -- dart analyze
+  test: melos exec --fail-fast -- dart test
