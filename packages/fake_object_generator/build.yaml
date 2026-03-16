@@ -1,0 +1,14 @@
+builders:
+  fake_mirror_builder:
+    import: "package:fake_object_generator/src/builder/fake_builder.dart"
+    builder_factories: ["fakeMirrorBuilder"]
+    build_extensions: {"^lib/{{}}.dart": ["test/support/fakes/{{}}.fake.dart"]}
+    auto_apply: dependents
+    build_to: source
+
+  fake_barrel_builder:
+    import: "package:fake_object_generator/src/builder/fake_builder.dart"
+    builder_factories: ["fakeBarrelBuilder"]
+    build_extensions: {"$package$": ["test/support/fakes.g.dart"]}
+    auto_apply: dependents
+    build_to: source

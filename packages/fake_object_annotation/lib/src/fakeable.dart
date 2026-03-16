@@ -1,0 +1,3 @@
+class Fakeable {
+  const Fakeable();
+}
