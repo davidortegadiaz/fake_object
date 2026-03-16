@@ -1,7 +1,9 @@
 name: fake_object_annotation
 description: Annotation package for fake_object code generation.
 version: 0.1.0
-publish_to: none
+homepage: https://github.com/davidortegadiaz/fake_object
+repository: https://github.com/davidortegadiaz/fake_object
+issue_tracker: https://github.com/davidortegadiaz/fake_object/issues
 
 environment:
   sdk: ">=2.17.0 <4.0.0"
